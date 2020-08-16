@@ -1,17 +1,17 @@
 import argparse
 import os
 import sys
-import argparse_constants
-
+from util.argparse_constants import *
+import util.cli as cli
 
 def parse(command = None):
     parser = argparse.ArgumentParser(description="lorebox",
                                      usage="test")
     subparsers = parser.add_subparsers(dest="command")
 
-    run_notebook = subparsers.add_parser('run', aliases=["r"], help='asg')
-    showchar = subparsers.add_parser("showchar", aliases=['sc'], help="test214r41")
-    print("test")
+    showchar = subparsers.add_parser("showchar", aliases=['sc'], help=showchar_help)
+    showchar.add_argument("character", help=showchar_character_help)
+    showchar.set_defaults(which=showchar_cmd)
 
     args = parser.parse_args(command)
 
@@ -24,8 +24,8 @@ def parse(command = None):
 def start(args = None):
     if args is None:
         args = sys.argv
-    print(argparse_constants.test)
-    parse()
+    func = cli.command(parse())
+
 
 if __name__ == "__main__":
     start()
